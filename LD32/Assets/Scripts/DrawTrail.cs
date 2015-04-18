@@ -14,10 +14,6 @@ public class DrawTrail : MonoBehaviour {
     private Vector3 lastPoint = Vector3.zero;
     private Vector3[] lastQuad = null;
 
-	void Start () {
-		
-        //AddLine(ml, MakeQuad(new Vector3(5, 0, 0), new Vector3(0, 20, 0), 3), false);
-	}
 
 	void Update() {
 
@@ -90,6 +86,8 @@ public class DrawTrail : MonoBehaviour {
         return q;
     }
 
+    bool prevNormalDir = true;
+
     Vector3[] MakeQuadWithPrevious(Vector3 s, Vector3 e, Vector3[] previous, float w)
     {
         w = w / 2;
@@ -97,13 +95,27 @@ public class DrawTrail : MonoBehaviour {
 
         Vector3 n = Vector3.Cross(s, e);
         Vector3 l = Vector3.Cross(n, e - s);
-        l.Normalize();
 
-        q[0] = previous[2];
-        q[1] = previous[3];
+        l.Normalize();
+        
+        bool normalDir = n.z > 0;
+
+        if (normalDir == prevNormalDir)
+        {
+            q[0] = previous[2];
+            q[1] = previous[3];
+        }
+        else
+        {
+            q[0] = previous[3];
+            q[1] = previous[2];
+        }
 
         q[2] = (e + l * w); //To left
         q[3] = (e + l * -w); //To Right
+
+        prevNormalDir = normalDir;
+
 
         return q;
     }

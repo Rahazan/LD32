@@ -33,17 +33,10 @@ public class TrailSegment : MonoBehaviour
         for (int i = 0; i < mesh.vertices.Length; i++)
         {
             if (i % 2 == 0)
-            {
                 leftEdge.Add(mesh.vertices[i]);
-            }
             else
-            {
                 rightEdge.Add(mesh.vertices[i]);
-            }
         }
-
-        Debug.Log(rightEdge.Count);
-        Debug.Log(leftEdge.Count);
 
         int pointCount = leftEdge.Count + rightEdge.Count + 1;
         Vector2[] colPoints = new Vector2[pointCount];

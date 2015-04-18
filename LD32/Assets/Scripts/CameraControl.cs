@@ -21,7 +21,7 @@ public class CameraControl : MonoBehaviour
 
     private float lastZoom;
     public float zoomSustain = 190f;
-    private Rigidbody rigidbody;
+    private Rigidbody _rigidbody;
 
     public bool enableMovement = true;
 
@@ -30,7 +30,7 @@ public class CameraControl : MonoBehaviour
     void Start()
     {
         gamePlane = new Plane(Vector3.zero, Vector3.up, Vector3.right);
-        rigidbody = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
         instance = this;
     }
 
@@ -79,14 +79,14 @@ public class CameraControl : MonoBehaviour
         z = Mathf.Lerp(lastZoom, z, Time.deltaTime * zoomSustain);
 
 
-        rigidbody.velocity = new Vector3(
-            Mathf.Lerp(rigidbody.velocity.x, velocity.x * dragSpeed, snappiness),
-            Mathf.Lerp(rigidbody.velocity.y, velocity.y * dragSpeed, snappiness),
-            Mathf.Lerp(rigidbody.velocity.z, z * scrollSpeed, zoomSnappiness));
+        _rigidbody.velocity = new Vector3(
+            Mathf.Lerp(_rigidbody.velocity.x, velocity.x * dragSpeed, snappiness),
+            Mathf.Lerp(_rigidbody.velocity.y, velocity.y * dragSpeed, snappiness),
+            Mathf.Lerp(_rigidbody.velocity.z, z * scrollSpeed, zoomSnappiness));
 
-        if (transform.position.z > -1.6f && rigidbody.velocity.z > 0f)
+        if (transform.position.z > -1.6f && _rigidbody.velocity.z > 0f)
         {
-            rigidbody.velocity = new Vector3(rigidbody.velocity.x, rigidbody.velocity.y, 0f);
+            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, 0f);
         }
         if (transform.position.z > -1f)
         {

@@ -49,6 +49,7 @@ public class DrawTrail : MonoBehaviour {
             {
                 lastQuad = MakeQuadWithPrevious(lastPoint, currentPoint, lastQuad, lineSize);
                 currentSegment.AddLine(lastQuad, false);
+                currentSegment.CreateCollider();
 
             }
             else //Don't draw section yet, not big enough section

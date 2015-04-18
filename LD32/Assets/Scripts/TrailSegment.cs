@@ -22,6 +22,16 @@ public class TrailSegment : MonoBehaviour
 
     public void Complete()
     {
+        CreateCollider();
+
+        GetComponent<MeshFilter>().mesh = mesh;
+
+        done = true;
+
+    }
+
+    public void CreateCollider()
+    {
         col = gameObject.GetComponent<EdgeCollider2D>();
 
 
@@ -46,7 +56,8 @@ public class TrailSegment : MonoBehaviour
 
         //Close the start of the segment
         colPoints[0] = rightEdge[0];
-        for(int i = 0; i < leftEdge.Count; i++) {
+        for (int i = 0; i < leftEdge.Count; i++)
+        {
             colPoints[i + 1] = leftEdge[i];
         }
 
@@ -59,10 +70,6 @@ public class TrailSegment : MonoBehaviour
         }
 
         col.points = colPoints;
-
-        GetComponent<MeshFilter>().mesh = mesh;
-
-        done = true;
 
     }
 

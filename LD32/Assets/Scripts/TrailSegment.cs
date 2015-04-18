@@ -66,11 +66,6 @@ public class TrailSegment : MonoBehaviour
 
     }
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
         if (!done)

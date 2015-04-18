@@ -13,7 +13,7 @@ public class GraphicsTrail : MonoBehaviour {
 	private Mesh ml;
 	private Material lmat;
 	
-	private Vector3 s;
+	private Vector3 last;
 
 	private float lineSize = 0.4f;
 	
@@ -30,48 +30,38 @@ public class GraphicsTrail : MonoBehaviour {
 
 	void Update() {
 
-        Vector3 e = GetNewPoint();
+        Vector3 current = GetNewPoint();
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && e != Vector3.zero)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && current != Vector3.zero)
         {
             //Current
             
             if (first == null)
             {
                 first = new Point();
-                first.p = e;//transform.InverseTransformPoint(e);
+                first.p = current;
             }
-
-            s = e;
+            last = current;
         }
 
 
-        //else if (Input.GetKeyUp(KeyCode.Mouse0))
-       // {
+        if (last != Vector3.zero)
+        {
+            AddLine(ml, MakeQuad(last, current, lineSize), false);
 
-        Debug.Log(e);
-            if (s != Vector3.zero)
-            {
-                Vector3 ls = s;//transform.TransformPoint(s);
-                AddLine(ml, MakeQuad(ls, e, lineSize), false);
+            Point np = new Point();
+            np.p = current;
+            first = np;
 
-                Debug.Log("adding line");
-                Point np = new Point();
-                np.p = e;//transform.InverseTransformPoint(e);
+            last = current;
 
-                s = e;
+        }
 
-            }
-
-            
-
-       // }
 		Draw();
 
         if (Input.GetKeyDown(KeyCode.C))
         {
             ml = new Mesh();
-            transform.rotation = Quaternion.identity;
             first = null;
         }
 

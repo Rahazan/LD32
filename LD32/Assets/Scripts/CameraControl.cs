@@ -7,6 +7,8 @@ using System.Collections;
 public class CameraControl : MonoBehaviour
 {
 
+    public static CameraControl instance;
+
     public float snappiness = 0.15f;
     public float zoomSnappiness = 0.10f;
 
@@ -14,7 +16,8 @@ public class CameraControl : MonoBehaviour
     public float scrollSpeed = 750f;
 
     public Plane gamePlane;
-    private Vector3 lastRayIntersect;
+
+    public Vector3 lastRayIntersect;
 
     private float lastZoom;
     public float zoomSustain = 190f;
@@ -26,6 +29,7 @@ public class CameraControl : MonoBehaviour
     {
         gamePlane = new Plane(Vector3.zero, Vector3.up, Vector3.right);
         rigidbody = GetComponent<Rigidbody>();
+        instance = this;
     }
 
 
@@ -34,10 +38,8 @@ public class CameraControl : MonoBehaviour
         Camera.main.orthographicSize = Mathf.Abs(transform.position.z);
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-
 
         Vector3 velocity = Vector3.zero;
         bool mouseAvailable = true;
@@ -55,6 +57,10 @@ public class CameraControl : MonoBehaviour
                     velocity = new Vector3(lastRayIntersect.x - ray.GetPoint(dist).x, lastRayIntersect.y - ray.GetPoint(dist).y, 0f);
                 }
                 lastRayIntersect = ray.GetPoint(dist);
+            }
+            else
+            {
+                lastRayIntersect = Vector3.zero;
             }
 
         }

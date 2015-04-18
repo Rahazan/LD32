@@ -23,6 +23,8 @@ public class CameraControl : MonoBehaviour
     public float zoomSustain = 190f;
     private Rigidbody rigidbody;
 
+    public bool enableMovement = true;
+
 
     // Use this for initialization
     void Start()
@@ -68,6 +70,9 @@ public class CameraControl : MonoBehaviour
         {
             lastRayIntersect = Vector3.zero;
         }
+
+
+        if (!enableMovement) return;
 
         float z = Input.GetAxis("Mouse ScrollWheel");
         z = Mathf.Clamp(z, -0.25f, 0.25f);

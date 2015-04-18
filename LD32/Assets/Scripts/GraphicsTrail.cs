@@ -6,6 +6,12 @@ class Point {
 	public Point next;
 }
 
+class TrailSegment
+{
+    
+}
+
+
 public class GraphicsTrail : MonoBehaviour {
 
 	public Shader shader;
@@ -13,9 +19,9 @@ public class GraphicsTrail : MonoBehaviour {
 	private Mesh ml;
 	private Material lmat;
 	
-	private Vector3 last;
+	private Vector3 last = Vector3.zero;
 
-	private float lineSize = 0.4f;
+	private float lineSize = 4f;
 	
 	
 	private Point first;
@@ -25,37 +31,31 @@ public class GraphicsTrail : MonoBehaviour {
 		ml = new Mesh();
 		lmat = new Material(shader);
 		lmat.color = new Color(0,0,0,0.8f);
-		
+
+
+        //AddLine(ml, MakeQuad(new Vector3(5, 0, 0), new Vector3(0, 20, 0), 3), false);
 	}
+
+    private Vector3[] prevQuad = null;
 
 	void Update() {
 
+
         Vector3 current = GetNewPoint();
+        Vector3[] quad = MakeQuad(last, current, lineSize);
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && current != Vector3.zero)
+        if (prevQuad != null)
         {
-            //Current
-            
-            if (first == null)
-            {
-                first = new Point();
-                first.p = current;
-            }
-            last = current;
+            AddLine(ml, MakeQuadWithPrevious(last, current, prevQuad, lineSize), false);
+        }
+        else
+        {
+            AddLine(ml, quad, false);
         }
 
+        prevQuad = quad;
+        last = current;
 
-        if (last != Vector3.zero)
-        {
-            AddLine(ml, MakeQuad(last, current, lineSize), false);
-
-            Point np = new Point();
-            np.p = current;
-            first = np;
-
-            last = current;
-
-        }
 
 		Draw();
 
@@ -78,14 +78,32 @@ public class GraphicsTrail : MonoBehaviour {
 		Vector3 n = Vector3.Cross(s, e);
 		Vector3 l = Vector3.Cross(n, e-s);
 		l.Normalize();
-		
-		q[0] = transform.InverseTransformPoint(s + l * w);
-		q[1] = transform.InverseTransformPoint(s + l * -w);
-		q[2] = transform.InverseTransformPoint(e + l * w);
-		q[3] = transform.InverseTransformPoint(e + l * -w);
+
+        q[0] = transform.InverseTransformPoint(s + l * w); //From left
+		q[1] = transform.InverseTransformPoint(s + l * -w); //From right
+        q[2] = transform.InverseTransformPoint(e + l * w); //To left
+        q[3] = transform.InverseTransformPoint(e + l * -w); //To Right
 
 		return q;
 	}
+
+    Vector3[] MakeQuadWithPrevious(Vector3 s, Vector3 e, Vector3[] previous, float w)
+    {
+        w = w / 2;
+        Vector3[] q = new Vector3[4];
+
+        Vector3 n = Vector3.Cross(s, e);
+        Vector3 l = Vector3.Cross(n, e - s);
+        l.Normalize();
+        q[0] = previous[2];
+        q[1] = previous[3];
+       
+        q[2] = transform.InverseTransformPoint(e + l * w);
+        q[3] = transform.InverseTransformPoint(e + l * -w);
+
+        return q;
+    }
+
 	
 	void AddLine(Mesh m, Vector3[] quad, bool tmp) {
 			int vl = m.vertices.Length;

@@ -11,13 +11,13 @@ public class CameraControl : MonoBehaviour
     public float zoomSnappiness = 0.10f;
 
     public float dragSpeed = 220f;
-    public float scrollSpeed = 420f;
+    public float scrollSpeed = 750f;
 
     public Plane gamePlane;
     private Vector3 lastRayIntersect;
 
     private float lastZoom;
-    public float zoomSustain = 100f;
+    public float zoomSustain = 190f;
     private Rigidbody rigidbody;
 
 

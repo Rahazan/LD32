@@ -79,10 +79,12 @@ public class GraphicsTrail : MonoBehaviour {
 		Vector3 l = Vector3.Cross(n, e-s);
 		l.Normalize();
 
-        q[0] = transform.InverseTransformPoint(s + l * w); //From left
-		q[1] = transform.InverseTransformPoint(s + l * -w); //From right
-        q[2] = transform.InverseTransformPoint(e + l * w); //To left
-        q[3] = transform.InverseTransformPoint(e + l * -w); //To Right
+
+        q[0] = s + l * w; //From left
+        q[1] = s + l * -w; //From right
+
+        q[2] = (e + l * w); //To left
+        q[3] = (e + l * -w); //To Right
 
 		return q;
 	}
@@ -95,11 +97,12 @@ public class GraphicsTrail : MonoBehaviour {
         Vector3 n = Vector3.Cross(s, e);
         Vector3 l = Vector3.Cross(n, e - s);
         l.Normalize();
+
         q[0] = previous[2];
         q[1] = previous[3];
-       
-        q[2] = transform.InverseTransformPoint(e + l * w);
-        q[3] = transform.InverseTransformPoint(e + l * -w);
+
+        q[2] = (e + l * w); //To left
+        q[3] = (e + l * -w); //To Right
 
         return q;
     }
@@ -135,7 +138,7 @@ public class GraphicsTrail : MonoBehaviour {
 	}
 	
 	Vector3 GetNewPoint() {
-        return CameraControl.instance.lastRayIntersect;
+        return CameraControl.instance.lastRayIntersect + Vector3.forward;
 	}
 	
 	Vector3[] resizeVertices(Vector3[] ovs, int ns) {

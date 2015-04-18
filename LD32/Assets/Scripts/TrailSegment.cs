@@ -21,6 +21,49 @@ public class TrailSegment : MonoBehaviour
     public void Complete()
     {
         col = gameObject.AddComponent<EdgeCollider2D>();
+
+        //Quad indices:
+        //0 is left start
+        //1 is right start
+        //2 is left end
+        //3 is right end
+        List<Vector2> leftEdge = new List<Vector2>();
+        List<Vector2> rightEdge = new List<Vector2>();
+
+        for (int i = 0; i < mesh.vertices.Length; i++)
+        {
+            if (i % 2 == 0)
+            {
+                leftEdge.Add(mesh.vertices[i]);
+            }
+            else
+            {
+                rightEdge.Add(mesh.vertices[i]);
+            }
+        }
+
+        Debug.Log(rightEdge.Count);
+        Debug.Log(leftEdge.Count);
+
+        int pointCount = leftEdge.Count + rightEdge.Count + 1;
+        Vector2[] colPoints = new Vector2[pointCount];
+
+        //Close the start of the segment
+        colPoints[0] = rightEdge[0];
+        for(int i = 0; i < leftEdge.Count; i++) {
+            colPoints[i + 1] = leftEdge[i];
+        }
+
+        //Looping around the right side
+        rightEdge.Reverse();
+
+        for (int i = 0; i < rightEdge.Count; i++)
+        {
+            colPoints[i + 1 + leftEdge.Count] = rightEdge[i];
+        }
+
+        col.points = colPoints;
+
     }
 
     void Start()

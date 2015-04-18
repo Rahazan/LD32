@@ -24,17 +24,21 @@ public class DrawTrail : MonoBehaviour {
         bool keepLastPoint = false;
         Vector3 currentPoint = GetNewPoint();
 
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            if (currentSegment)
+                currentSegment.Complete();
+            currentSegment = null;
+            lastPoint = Vector3.zero;
+            lastQuad = null;
+        }
+
         if (currentPoint == Vector3.zero)
         {
             return;
         }
 
-        if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
-            currentSegment = null;
-            lastPoint = Vector3.zero;
-            lastQuad = null;
-        }
+
 
 
         if (lastPoint != Vector3.zero) {
@@ -114,8 +118,6 @@ public class DrawTrail : MonoBehaviour {
     }
 	
 	Vector3 GetNewPoint() {
-        if (CameraControl.instance.lastRayIntersect == Vector3.zero) return Vector3.zero;
-
         return CameraControl.instance.lastRayIntersect;
 	}
 

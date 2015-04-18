@@ -72,7 +72,7 @@ public class DrawTrail : MonoBehaviour {
         w = w / 2;
         Vector3[] q = new Vector3[4];
 
-        Vector3 n = Vector3.Cross(s, e);
+        Vector3 n = -Vector3.forward;
         Vector3 l = Vector3.Cross(n, e - s);
         l.Normalize();
 
@@ -93,28 +93,16 @@ public class DrawTrail : MonoBehaviour {
         w = w / 2;
         Vector3[] q = new Vector3[4];
 
-        Vector3 n = Vector3.Cross(s, e);
+        Vector3 n = -Vector3.forward;
         Vector3 l = Vector3.Cross(n, e - s);
 
         l.Normalize();
         
-        bool normalDir = n.z > 0;
-
-        if (normalDir == prevNormalDir)
-        {
-            q[0] = previous[2];
-            q[1] = previous[3];
-        }
-        else
-        {
-            q[0] = previous[3];
-            q[1] = previous[2];
-        }
+        q[0] = previous[2];
+        q[1] = previous[3];
 
         q[2] = (e + l * w); //To left
         q[3] = (e + l * -w); //To Right
-
-        prevNormalDir = normalDir;
 
 
         return q;

@@ -10,6 +10,8 @@ public class TrailSegment : MonoBehaviour
     public Shader shader;
     EdgeCollider2D col;
 
+    public bool done = false;
+
     void Awake()
     {
         mesh = new Mesh();
@@ -20,7 +22,8 @@ public class TrailSegment : MonoBehaviour
 
     public void Complete()
     {
-        col = gameObject.AddComponent<EdgeCollider2D>();
+        col = gameObject.GetComponent<EdgeCollider2D>();
+
 
         //Quad indices:
         //0 is left start
@@ -57,6 +60,10 @@ public class TrailSegment : MonoBehaviour
 
         col.points = colPoints;
 
+        GetComponent<MeshFilter>().mesh = mesh;
+
+        done = true;
+
     }
 
     void Start()
@@ -66,7 +73,10 @@ public class TrailSegment : MonoBehaviour
 
     void Update()
     {
-        Draw();
+        if (!done)
+        {
+            Draw();
+        }
     }
 
     void Draw()

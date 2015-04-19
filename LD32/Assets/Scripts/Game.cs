@@ -17,7 +17,6 @@ public class Game : MonoBehaviour {
     public enum Mode
     {
         Launch,
-        Draw,
         View
     }
     public Mode mode = Mode.Launch;
@@ -31,8 +30,6 @@ public class Game : MonoBehaviour {
     }
 	// Use this for initialization
 	void Start () {
-        Draw();
-	    
 	}
 
     void Launch()
@@ -50,22 +47,6 @@ public class Game : MonoBehaviour {
 
         cameraControl.enableMovement = false;
         followCamera.enabled = true;
-        drawer.enabled = true;
-    }
-
-    void Draw()
-    {
-        
-        if (mode == Mode.Launch)
-        {
-            Camera.main.transform.position = cameraStartPoint.position;
-        }
-
-        mode = Mode.Draw;
-        player.SetActive(false);
-
-        cameraControl.enableMovement = false;
-        followCamera.enabled = false;
         drawer.enabled = true;
     }
 
@@ -92,10 +73,6 @@ public class Game : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Z))
         {
             Launch();
-        }
-        else if (Input.GetKeyDown(KeyCode.X))
-        {
-            Draw();
         }
         else if (Input.GetKeyDown(KeyCode.C))
         {

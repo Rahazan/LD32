@@ -48,7 +48,7 @@ public class CameraControl : MonoBehaviour
         //Drag
         if ((Input.GetKey(KeyCode.Mouse0) && mouseAvailable) || Input.GetKey(KeyCode.Mouse2))
         {
-            //Raycast into plane that makes up the solar platter
+            //Raycast into plane that makes up the game field
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             float dist;
             if (gamePlane.Raycast(ray, out dist))

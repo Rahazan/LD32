@@ -16,15 +16,21 @@ public class DrawTrail : MonoBehaviour {
 
     public bool enabled = true;
 
+    void OnDisable()
+    {
+        if (currentSegment)
+            currentSegment.Complete();
+        currentSegment = null;
+        lastPoint = Vector3.zero;
+        lastQuad = null;
+    }
 
 	void Update() {
-
-
 
         bool keepLastPoint = false;
         Vector3 currentPoint = GetNewPoint();
 
-        if (Input.GetKeyUp(KeyCode.Mouse0) || !enabled)
+        if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             if (currentSegment)
                 currentSegment.Complete();
@@ -33,7 +39,7 @@ public class DrawTrail : MonoBehaviour {
             lastQuad = null;
         }
 
-        if (currentPoint == Vector3.zero || !enabled || !Input.GetKey(KeyCode.Mouse0))
+        if (currentPoint == Vector3.zero || !Input.GetKey(KeyCode.Mouse0))
         {
             return;
         }

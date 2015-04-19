@@ -14,8 +14,6 @@ public class DrawTrail : MonoBehaviour {
     private Vector3 lastPoint = Vector3.zero;
     private Vector3[] lastQuad = null;
 
-    public bool enabled = true;
-
     void OnDisable()
     {
         if (currentSegment)

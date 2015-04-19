@@ -12,7 +12,9 @@ public class Game : MonoBehaviour {
     public Transform cameraStartPoint;
     public GameObject player;
 
+    public static Game instance;
 
+    public GameObject explosionPrefab;
 
     public enum Mode
     {
@@ -26,11 +28,17 @@ public class Game : MonoBehaviour {
     {
         cameraControl = Camera.main.GetComponent<CameraControl>();
         followCamera = Camera.main.GetComponent<FollowCamera>();
+        instance = this;
 
     }
-	// Use this for initialization
-	void Start () {
-	}
+
+
+
+    public void ExplodePlayer()
+    {
+        player.SetActive(false);
+        Instantiate(explosionPrefab, player.transform.position, Quaternion.identity);
+    }
 
     void Launch()
     {

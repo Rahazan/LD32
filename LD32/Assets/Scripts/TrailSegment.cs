@@ -121,6 +121,8 @@ public class TrailSegment : MonoBehaviour
         _vertices = vs;
         mesh.triangles = ts;
         mesh.RecalculateBounds();
+
+        GetComponent<MeshFilter>().mesh = mesh;
     }
 
     Vector3[] resizeVertices(Vector3[] ovs, int ns)

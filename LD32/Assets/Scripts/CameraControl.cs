@@ -98,6 +98,16 @@ public class CameraControl : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, -1f);
         }
 
+        if (transform.position.z < -31f && _rigidbody.velocity.z < 0f)
+        {
+            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, _rigidbody.velocity.y, 0f);
+        }
+        if (transform.position.z < -32f)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, -32f);
+        }
+
+
 
 
         lastZoom = z;

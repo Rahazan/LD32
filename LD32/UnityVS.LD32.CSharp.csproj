@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\FollowCamera.cs" />
     <Compile Include="Assets\Scripts\Game.cs" />
     <Compile Include="Assets\Scripts\Music.cs" />
+    <Compile Include="Assets\Scripts\Target.cs" />
     <Compile Include="Assets\Scripts\TrailSegment.cs" />
   </ItemGroup>
   <ItemGroup>

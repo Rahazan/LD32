@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 
 public class Game : MonoBehaviour {
@@ -15,8 +16,12 @@ public class Game : MonoBehaviour {
     public static Game instance;
 
     public GameObject explosionPrefab;
+    public GameObject targetExplosionPrefab;
 
     public bool gameOver = false;
+
+    public List<GameObject> targets;
+
 
 
     public enum Mode
@@ -32,6 +37,7 @@ public class Game : MonoBehaviour {
         cameraControl = Camera.main.GetComponent<CameraControl>();
         followCamera = Camera.main.GetComponent<FollowCamera>();
         instance = this;
+        View();
 
     }
 
@@ -40,15 +46,38 @@ public class Game : MonoBehaviour {
     public void ExplodePlayer()
     {
         gameOver = true;
-        player.SetActive(false);
-        Instantiate(explosionPrefab, player.transform.position, Quaternion.identity);
+        Explode(player);
         followCamera.enabled = false;
         cameraControl.enableMovement = true;
+
+        foreach (GameObject target in targets)
+        {
+            if (Vector3.Distance(target.transform.position, player.transform.position) < 5f)
+            {
+                Explode(target);
+            }
+        }
     }
+
+    public void RespawnTargets()
+    {
+        foreach (GameObject target in targets)
+        {
+            target.SetActive(true);
+        }
+    }
+
+    public void Explode(GameObject go)
+    {
+        go.SetActive(false);
+        Instantiate(explosionPrefab, go.transform.position, Quaternion.identity);
+    }
+
+
 
     void Launch()
     {
-
+        RespawnTargets();
         foreach (TrailSegment s in TrailSegment.allSegments) {
             Destroy(s.gameObject);
         }
@@ -72,7 +101,8 @@ public class Game : MonoBehaviour {
 
     void View()
     {
-        
+
+        RespawnTargets();
         if (mode == Mode.Launch)
         {
             Camera.main.transform.position = cameraStartPoint.position;
@@ -90,17 +120,17 @@ public class Game : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Launch();
-        }
-        else if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             View();
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
             Launch();
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && !gameOver)
+        {
+            ExplodePlayer();
         }
 
 	}

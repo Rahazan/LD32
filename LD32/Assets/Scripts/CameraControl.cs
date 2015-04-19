@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine;
 using System.Collections;
 
+[ExecuteInEditMode]
 public class CameraControl : MonoBehaviour
 {
 
@@ -30,6 +31,11 @@ public class CameraControl : MonoBehaviour
     {
         gamePlane = new Plane(Vector3.zero, Vector3.up, Vector3.right);
         _rigidbody = GetComponent<Rigidbody>();
+        instance = this;
+    }
+
+    void Awake()
+    {
         instance = this;
     }
 

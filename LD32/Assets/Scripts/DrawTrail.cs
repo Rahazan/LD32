@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
 public class DrawTrail : MonoBehaviour {
 
 	public GameObject trailPrefab;
@@ -94,8 +93,6 @@ public class DrawTrail : MonoBehaviour {
 
         return q;
     }
-
-    bool prevNormalDir = true;
 
     Vector3[] MakeQuadWithPrevious(Vector3 s, Vector3 e, Vector3[] previous, float w)
     {

@@ -25,7 +25,6 @@ public class CameraControl : MonoBehaviour
 
     public bool enableMovement = true;
 
-
     // Use this for initialization
     void Start()
     {
@@ -72,7 +71,7 @@ public class CameraControl : MonoBehaviour
         }
 
 
-        if (!enableMovement) return;
+        if (!enableMovement) velocity = Vector3.zero;
 
         float z = Input.GetAxis("Mouse ScrollWheel");
         z = Mathf.Clamp(z, -0.25f, 0.25f);

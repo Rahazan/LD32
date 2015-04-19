@@ -14,6 +14,12 @@ public class FollowCamera : MonoBehaviour {
 
 
 
+    void Awake()
+    {
+        if (!target) target = GameObject.FindGameObjectWithTag("Player").transform;
+        targetRigidbody = target.GetComponent<Rigidbody2D>();
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -22,8 +28,18 @@ public class FollowCamera : MonoBehaviour {
 
     }
 
+
+    void OnEnable()
+    {
+
+        GetComponent<Rigidbody>().velocity = targetRigidbody.velocity*0.3f;
+    }
+
     void LateUpdate()
     {
+
+
+
         var speed = targetRigidbody.velocity.magnitude;
         var desiredOffset = new Vector3(targetRigidbody.velocity.x *0.3f, targetRigidbody.velocity.y * 0.3f, -10 + speed / -7f);
         targetPos = target.position + desiredOffset;

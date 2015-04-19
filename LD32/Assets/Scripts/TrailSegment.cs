@@ -10,6 +10,8 @@ public class TrailSegment : MonoBehaviour
     public Shader shader;
     EdgeCollider2D col;
 
+    private Vector3[] _vertices;
+
     public bool done = false;
 
     void Awake()
@@ -43,12 +45,12 @@ public class TrailSegment : MonoBehaviour
         List<Vector2> leftEdge = new List<Vector2>();
         List<Vector2> rightEdge = new List<Vector2>();
 
-        for (int i = 0; i < mesh.vertices.Length; i++)
+        for (int i = 0; i < _vertices.Length; i++)
         {
             if (i % 2 == 0)
-                leftEdge.Add(mesh.vertices[i]);
+                leftEdge.Add(_vertices[i]);
             else
-                rightEdge.Add(mesh.vertices[i]);
+                rightEdge.Add(_vertices[i]);
         }
 
         int pointCount = leftEdge.Count + rightEdge.Count + 1;
@@ -112,6 +114,7 @@ public class TrailSegment : MonoBehaviour
         ts[tl + 5] = vl + 2;
 
         mesh.vertices = vs;
+        _vertices = vs;
         mesh.triangles = ts;
         mesh.RecalculateBounds();
     }

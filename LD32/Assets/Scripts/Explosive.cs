@@ -8,5 +8,4 @@ public class Explosive : MonoBehaviour {
         Game.instance.ExplodePlayer();
     }
 
-
 }

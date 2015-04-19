@@ -16,6 +16,9 @@ public class Game : MonoBehaviour {
 
     public GameObject explosionPrefab;
 
+    public bool gameOver = false;
+
+
     public enum Mode
     {
         Launch,
@@ -36,14 +39,23 @@ public class Game : MonoBehaviour {
 
     public void ExplodePlayer()
     {
+        gameOver = true;
         player.SetActive(false);
         Instantiate(explosionPrefab, player.transform.position, Quaternion.identity);
+        followCamera.enabled = false;
+        cameraControl.enableMovement = true;
     }
 
     void Launch()
     {
-        mode = Mode.Launch;
 
+        foreach (TrailSegment s in TrailSegment.allSegments) {
+            Destroy(s.gameObject);
+        }
+        TrailSegment.allSegments.Clear();
+
+        mode = Mode.Launch;
+        gameOver = false;
         //Put player on spawn
         player.transform.position = spawnPoint.position;
         player.transform.rotation = Quaternion.identity;
@@ -85,6 +97,10 @@ public class Game : MonoBehaviour {
         else if (Input.GetKeyDown(KeyCode.C))
         {
             View();
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            Launch();
         }
 
 	}

@@ -5,6 +5,10 @@ using System.Collections.Generic;
 public class TrailSegment : MonoBehaviour
 {
 
+
+
+    public static List<TrailSegment> allSegments = new List<TrailSegment>();
+
     private Mesh mesh;
     private Material mat;
     public Shader shader;
@@ -19,13 +23,13 @@ public class TrailSegment : MonoBehaviour
         mesh = new Mesh();
         mat = new Material(shader);
         mat.color = new Color(0, 0, 0, 0.8f);
+        allSegments.Add(this);
     }
 
 
     public void Complete()
     {
         CreateCollider();
-
         GetComponent<MeshFilter>().mesh = mesh;
 
         done = true;

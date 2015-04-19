@@ -41,7 +41,9 @@ public class FollowCamera : MonoBehaviour {
 
 
         var speed = targetRigidbody.velocity.magnitude;
-        var desiredOffset = new Vector3(targetRigidbody.velocity.x *0.3f + 6f, targetRigidbody.velocity.y * 0.3f, -20 + speed / -12f);
+       // var desiredOffset = new Vector3(targetRigidbody.velocity.x *0.3f + 6f, targetRigidbody.velocity.y * 0.3f, -20 + speed / -12f);
+        var desiredOffset = new Vector3(targetRigidbody.velocity.x * 0.0f + 6f, targetRigidbody.velocity.y * 0.0f, transform.position.z - target.transform.position.z);
+
         targetPos = target.position + desiredOffset;
 
         transform.position = Vector3.Lerp(transform.position, targetPos, snappiness* Time.deltaTime);

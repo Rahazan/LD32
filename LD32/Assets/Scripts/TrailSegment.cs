@@ -9,7 +9,7 @@ public class TrailSegment : MonoBehaviour
 
     public static List<TrailSegment> allSegments = new List<TrailSegment>();
 
-    private Mesh mesh;
+    public Mesh mesh;
     private Material mat;
     public Shader shader;
     EdgeCollider2D col;
@@ -20,10 +20,10 @@ public class TrailSegment : MonoBehaviour
 
     void Awake()
     {
-        mesh = new Mesh();
+        if (!mesh) mesh = new Mesh();
+        GetComponent<MeshFilter>().mesh = mesh;
         mat = new Material(shader);
         mat.color = new Color(0, 0, 0, 0.8f);
-        allSegments.Add(this);
     }
 
 
@@ -31,7 +31,7 @@ public class TrailSegment : MonoBehaviour
     {
         CreateCollider();
         GetComponent<MeshFilter>().mesh = mesh;
-
+        allSegments.Add(this);
         done = true;
 
     }

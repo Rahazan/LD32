@@ -63,6 +63,14 @@ public class Game : MonoBehaviour {
             go.SetActive(false);
         }
 
+        if (number >= levels.Count)
+        {
+            levelText.text = "Sandbox ";
+            currentLevelIndex = number;
+            View();
+            return;
+        }
+
         currentLevel = levels[number];
         levels[number].SetActive(true);
         currentLevelIndex = number;
@@ -71,6 +79,8 @@ public class Game : MonoBehaviour {
         levelText.text = "Level " + (number+1);
     }
 
+
+    public bool sandbox = false;
 
     void FindTarget()
     {
@@ -113,7 +123,8 @@ public class Game : MonoBehaviour {
 
             if (currentLevelIndex == (levels.Count-1)) {
                 statusText.text = "The end, thanks for playing!";
-                status2Text.text = "Press R to play level again";
+                sandbox = true;
+                status2Text.text = "Press S to play sandbox mode";
                 readyForNextLevel = false;
             }
         }
@@ -210,6 +221,14 @@ public class Game : MonoBehaviour {
             statusText.text = "";
             status2Text.text = "";
             return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (sandbox)
+            {
+                LoadLevel(12093812);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.R) || (gameOver && Input.GetKeyDown(KeyCode.Space) && !readyForNextLevel))

@@ -27,7 +27,10 @@ public class DrawTrail : MonoBehaviour {
         bool keepLastPoint = false;
         Vector3 currentPoint = GetNewPoint();
 
-        if (Input.GetKeyUp(KeyCode.Mouse0))
+        bool canDraw = !NoDraw.isInNoDraw(currentPoint);
+
+
+        if (Input.GetKeyUp(KeyCode.Mouse0) || !canDraw)
         {
             if (currentSegment)
                 currentSegment.Complete();
@@ -36,8 +39,11 @@ public class DrawTrail : MonoBehaviour {
             lastQuad = null;
         }
 
-        if (currentPoint == Vector3.zero || !Input.GetKey(KeyCode.Mouse0))
+        if (currentPoint == Vector3.zero || !Input.GetKey(KeyCode.Mouse0) || !canDraw)
         {
+            lastPoint = Vector3.zero;
+            currentSegment = null;
+            lastQuad = null;
             return;
         }
 

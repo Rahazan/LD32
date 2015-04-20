@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Game.cs" />
     <Compile Include="Assets\Scripts\Music.cs" />
     <Compile Include="Assets\Scripts\ExplosiveTrack.cs" />
+    <Compile Include="Assets\Scripts\NoDraw.cs" />
     <Compile Include="Assets\Scripts\Target.cs" />
     <Compile Include="Assets\Scripts\TrailSegment.cs" />
   </ItemGroup>
